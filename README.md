@@ -93,3 +93,28 @@ Given POC of test records in the STRAC format, translate this file structure int
 - TestQualitativeResult
 - Notes
 - PerformingFacilityName
+
+## Translation
+
+PA DOH | STRAC
+-------|-------
+PatientFirstName | Pt_Fname
+PatientMiddleInitial | Pt_Middle_Initial
+PatientLastName | Pt_Lname
+PatientSuffix |
+PatientDOB | Date_of_Birth
+PatientAddress1 | Pt_Str
+PatientCity |  Pt_City
+PatientState | Pt_ST
+PatientZipCode | Pt_Zip
+PatientPhoneNumber | Pt_Phone
+PatientGender |  Pt_Sex
+PatientRace | Pt_Race
+PatientEthnicity | Pt_Ethnicity
+TestID |
+SpecimenCollectedDate |
+SpecimenSource |
+TestName | Ordered_Test_Name
+TestQualitativeResult | [ Result, Result_Units ]
+Notes | [ Reference_Range
+PerformingFacilityName | Performing_Organization_Name
