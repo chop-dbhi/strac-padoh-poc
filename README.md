@@ -1,24 +1,40 @@
-# STRAC-PADOH POC Translator
+# STRAC to State Mapping
 
-Southwest Texas Regional Advisory Council (STRAC) COVID-19 point-of-care (POC) test template to the PA department of health (DOH) point-of-care (POC) test translator.
+This repo contains a standard process for defining a mapping between the Southwest Texas Regional Advisory Council (STRAC) point-of-care record structure to state-specific records to be processed locally.
 
-## Motivation
+## States
 
-Given POC of test records in the STRAC format, translate this file structure into the PA DOH record structure.
+Don't see your state? Please contribute!
+
+- [PA](./states/pa)
 
 ## Target implementations
 
-- [ ] Command-line tool
-  - Supported on Windows, macOS, and Linux
-  - Users can use anywhere in their workflow
-- [ ] Web interface
-  - Use cURL or other HTTP client to upload and translate
-  - Simple form interface to graphically upload and download
-  - Operators can host locally for users
+The goal is to support an increasing number of workflows at the state level, including:
 
-## Source File
+### Manual entry
 
-### Headers
+Used by data entry workers who can map the STRAC format to the state-specific record structure. Each state will have instructions in the directory for the translation process.
+
+### Command-line interface
+
+Provides machine translation of the STRAC format to the state-specific record structure.
+
+For example, the following will take a STRAC dataset and convert it into the corresponding PA DOH record structure.
+
+```
+strac convert --state=PA strac_data.csv padoh_data.csv
+```
+
+During the conversion, it will also validate the data being produced to ensure values are correct and missing data is not present. These will be reported as warnings with the line and column names where they need to be corrected. This enables for human follow-up if required.
+
+### Self-hosted Web interface
+
+Operators can host this locally for users to enable uploading of the STRAC records and translate it to the state-specific record structure.
+
+*Work in progress.*
+
+## STRAC Format
 
 - Reporting_Facility_Name
 - CLIA_Number
@@ -68,28 +84,3 @@ Given POC of test records in the STRAC format, translate this file structure int
 - Specimen_Type
 - Date_Test_Ordered
 - Date_Specimen_Collected
-
-## Target File
-
-### Headers
-
-- PatientFirstName
-- PatientMiddleInitial
-- PatientLastName
-- PatientSuffix
-- PatientDOB
-- PatientAddress1
-- PatientCity
-- PatientState
-- PatientZipCode
-- PatientPhoneNumber
-- PatientGender
-- PatientRace
-- PatientEthnicity
-- TestID
-- SpecimenCollectedDate
-- SpecimenSource
-- TestName
-- TestQualitativeResult
-- Notes
-- PerformingFacilityName
