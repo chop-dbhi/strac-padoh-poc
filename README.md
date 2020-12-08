@@ -6,6 +6,16 @@ Southwest Texas Regional Advisory Council (STRAC) COVID-19 point-of-care (POC) t
 
 Given POC of test records in the STRAC format, translate this file structure into the PA DOH record structure.
 
+## Target implementations
+
+- [ ] Command-line tool
+  - Supported on Windows, macOS, and Linux
+  - Users can use anywhere in their workflow
+- [ ] Web interface
+  - Use cURL or other HTTP client to upload and translate
+  - Simple form interface to graphically upload and download
+  - Operators can host locally for users
+
 ## Source File
 
 ### Headers
