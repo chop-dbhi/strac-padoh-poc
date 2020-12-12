@@ -1,2 +1,3 @@
 ﻿PatientFirstName,PatientMiddleInitial,PatientLastName,PatientSuffix,PatientDOB,PatientAddress1,PatientCity,PatientState,PatientZipCode,PatientPhoneNumber,PatientGender,PatientRace,PatientEthnicity,TestID,SpecimenCollectedDate,SpecimenSource,TestName,TestQualitativeResult,Notes,PerformingFacilityName
-myname,A,lastname,JR,8/25/03,123 West Main Street,Atown,PA,17100,(111) 222-3333,Male,Asian,Hispanic,20RH-196-01554,8/25/20,Nose,ANTIGEN test - Point-of-care ,Detected,This is a test.,Big Sleepy Oak Tree
+enterdata,in,thisrow,tobegin,11/2/20,123 West Main Street,Atown,PA,17100,(111) 222-3333,Male,Asian,Hispanic,20RH-196-01554,11/1/20,Saliva,COVID-19 ANTIGEN test - Point-of-care ,,This is a test.,Big Sleepy Oak Tree
+a,,b,,11/1/20,,,,17000,,,,,,,,,,,
