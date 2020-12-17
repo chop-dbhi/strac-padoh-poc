@@ -9,108 +9,51 @@ import (
 	"log"
 )
 
-// Define STRAC field names as constants to have compile-time safety of lookups.
 var STRACColumns = []string{
-	"Reporting_Facility_Name",
-	"CLIA_Number",
-	"Performing_Organization_Name",
-	"Performing_Organization_Address",
-	"Performing_Organization_City",
-	"Performing_Organization_Zip",
-	"Performing_Organization_State",
-	"Device_Identifier",
-	"Ordered_Test_Name",
-	"LOINC_Code",
-	"LOINC_Text",
-	"Result",
-	"Result_Units",
-	"Reference_Range",
-	"Date_Test_Performed",
-	"Test_Result_Date",
-	"Pt_Fname",
-	"Pt_Middle_Initial",
-	"Pt_Lname",
-	"Date_of_Birth",
-	"Patient Age",
-	"Sex",
-	"Pt_Race",
-	"Pt_Ethnicity",
-	"Pt_Phone",
-	"Pt_Str",
-	"Pt_City",
-	"Pt_ST",
-	"Pt_Zip",
-	"Pt_County",
-	"Accession_Number",
-	"Ordering_Facility",
-	"Ordering_Facility_Address",
-	"Ordering_Facility_City",
-	"Ordering_Facility_State",
-	"Ordering_Facility_Zip",
-	"Ordering_Provider_Last_Name",
-	"Ordering_Provider_First_Name",
-	"Ordering_Provider_NPI",
-	"Ordering_Provider_Street_Address",
-	"Ordering_Provider_City",
-	"Ordering_Provider_State",
-	"Ordering_Provider_Zip",
-	"Ordering_Provider_Phone",
-	"Specimen_ID",
-	"Specimen_Type",
-	"Date_Test_Ordered",
-	"Date_Specimen_Collected",
+	"id",
+	"street",
+	"city",
+	"state",
+	"zip",
+	"patient_first_name",
+	"patient_last_name",
+	"patient_dob",
+	"patient_address",
+	"patient_city",
+	"patient_state",
+	"patient_county",
+	"patient_zip",
+	"patient_callback_number",
+	"patient_sex",
+	"patient_race",
+	"patient_ethnicity",
+	"patient_results",
+	"patient_positive",
+	"reason",
 }
 
 // STRACRecord represents a STRAC record of data.
 type STRACRecord struct {
-	Reporting_Facility_Name          string
-	CLIA_Number                      string
-	Performing_Organization_Name     string
-	Performing_Organization_Address  string
-	Performing_Organization_City     string
-	Performing_Organization_Zip      string
-	Performing_Organization_State    string
-	Device_Identifier                string
-	Ordered_Test_Name                string
-	LOINC_Code                       string
-	LOINC_Text                       string
-	Result                           string
-	Result_Units                     string
-	Reference_Range                  string
-	Date_Test_Performed              string
-	Test_Result_Date                 string
-	Pt_Fname                         string
-	Pt_Middle_Initial                string
-	Pt_Lname                         string
-	Date_of_Birth                    string
-	Patient_Age                      string
-	Sex                              string
-	Pt_Race                          string
-	Pt_Ethnicity                     string
-	Pt_Phone                         string
-	Pt_Str                           string
-	Pt_City                          string
-	Pt_ST                            string
-	Pt_Zip                           string
-	Pt_County                        string
-	Accession_Number                 string
-	Ordering_Facility                string
-	Ordering_Facility_Address        string
-	Ordering_Facility_City           string
-	Ordering_Facility_State          string
-	Ordering_Facility_Zip            string
-	Ordering_Provider_Last_Name      string
-	Ordering_Provider_First_Name     string
-	Ordering_Provider_NPI            string
-	Ordering_Provider_Street_Address string
-	Ordering_Provider_City           string
-	Ordering_Provider_State          string
-	Ordering_Provider_Zip            string
-	Ordering_Provider_Phone          string
-	Specimen_ID                      string
-	Specimen_Type                    string
-	Date_Test_Ordered                string
-	Date_Specimen_Collected          string
+	ID                    string `json:"id"`
+	Street                string `json:"street"`
+	City                  string `json:"city"`
+	State                 string `json:"state"`
+	Zip                   string `json:"zip"`
+	PatientFirstName      string `json:"patient_first_name"`
+	PatientLastName       string `json:"patient_last_name"`
+	PatientDOB            string `json:"patient_dob"`
+	PatientAddress        string `json:"patient_address"`
+	PatientCity           string `json:"patient_city"`
+	PatientCounty         string `json:"patient_county"`
+	PatientState          string `json:"patient_state"`
+	PatientZip            string `json:"patient_zip"`
+	PatientCallbackNumber string `json:"patient_callback_number"`
+	PatientSex            string `json:"patient_sex"`
+	PatientRace           string `json:"patient_race"`
+	PatientEthnicity      string `json:"patient_ethnicity"`
+	PatientResults        string `json:"patient_results"`
+	PatientPositive       string `json:"patient_positive"`
+	Reason                string `json:"reason"`
 }
 
 type Column struct {
@@ -126,7 +69,6 @@ type ValidationResult struct {
 }
 
 // indexSTRACHeader validates and builds an index from column to index.
-// TODO: normalize column names, account for lowercase, etc?
 func indexSTRACHeader(header []string) (map[string]int, *ValidationResult) {
 	index := make(map[string]int)
 
@@ -168,7 +110,7 @@ func indexSTRACHeader(header []string) (map[string]int, *ValidationResult) {
 	// Check for expected columns that were not in the header.
 	for col, found := range foundColumns {
 		if !found {
-			errors = append(errors, fmt.Sprintf("column not found: %s", col))
+			warnings = append(warnings, fmt.Sprintf("column not found: %s", col))
 		}
 	}
 
@@ -189,6 +131,14 @@ func readBom(r io.Reader) (io.Reader, error) {
 		br.UnreadRune()
 	}
 	return br, nil
+}
+
+func rowValue(row []string, index map[string]int, col string) string {
+	idx, ok := index[col]
+	if !ok {
+		return ""
+	}
+	return row[idx]
 }
 
 func Convert(r io.Reader, w io.Writer, columns []*Column) error {
@@ -260,54 +210,26 @@ func Convert(r io.Reader, w io.Writer, columns []*Column) error {
 
 		// Produce a record that will be used within the mapper functions.
 		record := &STRACRecord{
-			Reporting_Facility_Name:          row[stracIndex["Reporting_Facility_Name"]],
-			CLIA_Number:                      row[stracIndex["CLIA_Number"]],
-			Performing_Organization_Name:     row[stracIndex["Performing_Organization_Name"]],
-			Performing_Organization_Address:  row[stracIndex["Performing_Organization_Address"]],
-			Performing_Organization_City:     row[stracIndex["Performing_Organization_City"]],
-			Performing_Organization_Zip:      row[stracIndex["Performing_Organization_Zip"]],
-			Performing_Organization_State:    row[stracIndex["Performing_Organization_State"]],
-			Device_Identifier:                row[stracIndex["Device_Identifier"]],
-			Ordered_Test_Name:                row[stracIndex["Ordered_Test_Name"]],
-			LOINC_Code:                       row[stracIndex["LOINC_Code"]],
-			LOINC_Text:                       row[stracIndex["LOINC_Text"]],
-			Result:                           row[stracIndex["Result"]],
-			Result_Units:                     row[stracIndex["Result_Units"]],
-			Reference_Range:                  row[stracIndex["Reference_Range"]],
-			Date_Test_Performed:              row[stracIndex["Date_Test_Performed"]],
-			Test_Result_Date:                 row[stracIndex["Test_Result_Date"]],
-			Pt_Fname:                         row[stracIndex["Pt_Fname"]],
-			Pt_Middle_Initial:                row[stracIndex["Pt_Middle_Initial"]],
-			Pt_Lname:                         row[stracIndex["Pt_Lname"]],
-			Date_of_Birth:                    row[stracIndex["Date_of_Birth"]],
-			Patient_Age:                      row[stracIndex["Patient Age"]],
-			Sex:                              row[stracIndex["Sex"]],
-			Pt_Race:                          row[stracIndex["Pt_Race"]],
-			Pt_Ethnicity:                     row[stracIndex["Pt_Ethnicity"]],
-			Pt_Phone:                         row[stracIndex["Pt_Phone"]],
-			Pt_Str:                           row[stracIndex["Pt_Str"]],
-			Pt_City:                          row[stracIndex["Pt_City"]],
-			Pt_ST:                            row[stracIndex["Pt_ST"]],
-			Pt_Zip:                           row[stracIndex["Pt_Zip"]],
-			Pt_County:                        row[stracIndex["Pt_County"]],
-			Accession_Number:                 row[stracIndex["Accession_Number"]],
-			Ordering_Facility:                row[stracIndex["Ordering_Facility"]],
-			Ordering_Facility_Address:        row[stracIndex["Ordering_Facility_Address"]],
-			Ordering_Facility_City:           row[stracIndex["Ordering_Facility_City"]],
-			Ordering_Facility_State:          row[stracIndex["Ordering_Facility_State"]],
-			Ordering_Facility_Zip:            row[stracIndex["Ordering_Facility_Zip"]],
-			Ordering_Provider_Last_Name:      row[stracIndex["Ordering_Provider_Last_Name"]],
-			Ordering_Provider_First_Name:     row[stracIndex["Ordering_Provider_First_Name"]],
-			Ordering_Provider_NPI:            row[stracIndex["Ordering_Provider_NPI"]],
-			Ordering_Provider_Street_Address: row[stracIndex["Ordering_Provider_Street_Address"]],
-			Ordering_Provider_City:           row[stracIndex["Ordering_Provider_City"]],
-			Ordering_Provider_State:          row[stracIndex["Ordering_Provider_State"]],
-			Ordering_Provider_Zip:            row[stracIndex["Ordering_Provider_Zip"]],
-			Ordering_Provider_Phone:          row[stracIndex["Ordering_Provider_Phone"]],
-			Specimen_ID:                      row[stracIndex["Specimen_ID"]],
-			Specimen_Type:                    row[stracIndex["Specimen_Type"]],
-			Date_Test_Ordered:                row[stracIndex["Date_Test_Ordered"]],
-			Date_Specimen_Collected:          row[stracIndex["Date_Specimen_Collected"]],
+			ID:                    rowValue(row, stracIndex, "id"),
+			Street:                rowValue(row, stracIndex, "street"),
+			City:                  rowValue(row, stracIndex, "city"),
+			State:                 rowValue(row, stracIndex, "state"),
+			Zip:                   rowValue(row, stracIndex, "zip"),
+			PatientFirstName:      rowValue(row, stracIndex, "patient_first_name"),
+			PatientLastName:       rowValue(row, stracIndex, "patient_last_name"),
+			PatientDOB:            rowValue(row, stracIndex, "patient_dob"),
+			PatientAddress:        rowValue(row, stracIndex, "patient_address"),
+			PatientCity:           rowValue(row, stracIndex, "patient_city"),
+			PatientState:          rowValue(row, stracIndex, "patient_state"),
+			PatientCounty:         rowValue(row, stracIndex, "patient_county"),
+			PatientZip:            rowValue(row, stracIndex, "patient_zip"),
+			PatientCallbackNumber: rowValue(row, stracIndex, "patient_callback_number"),
+			PatientSex:            rowValue(row, stracIndex, "patient_sex"),
+			PatientRace:           rowValue(row, stracIndex, "patient_race"),
+			PatientEthnicity:      rowValue(row, stracIndex, "patient_ethnicity"),
+			PatientResults:        rowValue(row, stracIndex, "patient_resuls"),
+			PatientPositive:       rowValue(row, stracIndex, "patient_positive"),
+			Reason:                rowValue(row, stracIndex, "reason"),
 		}
 
 		data := make([]string, len(columns))

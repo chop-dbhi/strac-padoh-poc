@@ -1,0 +1,101 @@
+{
+"output_cols": {
+
+"PatientFirstName": {
+            "col": "patient_first_name",
+            "filter": "readable_format"
+        },
+"PatientMiddleInitial": "",
+"PatientLastName": {
+            "col": "patient_last_name",
+            "filter": "readable_format"
+        },
+"PatientSuffix": "",
+"PatientDOB": {
+            "col": "patient_dob",
+            "filter": "date_format"
+        },
+"PatientAddress1": {
+            "col": "patient_address",
+            "filter": ["remove_commas", "readable_format"]
+        },
+"PatientCity": {
+    "col": "patient_city",
+    "filter": "readable_format"
+},
+"PatientState": {
+    "col": "patient_state"
+},
+"PatientZipCode": {
+    "col": "patient_zip",
+    "filter": "zip_format"
+},
+"PatientPhoneNumber": {
+    "col": "patient_callback_number",
+    "filter": "phone_format"
+},
+"PatientGender": {
+    "col": "patient_sex",
+    "filter": "patient_sex"
+},
+"PatientRace": {
+    "col": "patient_race",
+    "filter": "patient_race"
+},
+"PatientEthnicity": {
+    "col": "patient_ethnicity",
+    "filter": "patient_ethnicity"
+},
+"TestID": {
+            "col": "id"
+       },
+"SpecimenCollectedDate": {
+            "col": "patient_results",
+            "filter": "date_format"
+        },
+"SpecimenSource": "nasal swab",
+"TestName": "SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay",
+"TestQualitativeResult": {
+            "col": "patient_positive",
+            "filter": "patient_positive"
+        },
+"Notes": "",
+"PerformingFacilityName": {
+            "col": "reason",
+            "filter": ["remove_commas", "readable_format"],
+            "required": true
+}
+    },
+    "filters": {
+        "patient_positive": {
+            "invalid": "Invalid",
+            "positive": "Positive",
+            "negative": "Negative",
+            "indeterminate": "Indeterminate"
+        },
+        "patient_sex": {
+            "male": "M",
+            "female": "F",
+            "unk": "U"
+        },
+        "patient_race": [
+            "AI",
+            "A",
+            "B",
+            "PI",
+            "W",
+            "O",
+            "U"
+        ],
+        "patient_ethnicity": [
+            "H",
+            "NH",
+            "U"
+        ],
+        "remove_commas": "func:remove_commas",
+        "date_format": "ts:m/d/Y",
+        "phone_format": "func:phone_format",
+        "zip_format": "func:zip_format",
+        "readable_format": "func:filter_ascii_32_to_126"
+    }
+}

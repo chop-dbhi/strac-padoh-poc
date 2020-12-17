@@ -17,6 +17,10 @@ import (
 	pa "github.com/chop-dbhi/strac/states/pa"
 )
 
+var (
+	buildVersion string
+)
+
 var states = map[string][]*converter.Column{
 	"pa": pa.Columns,
 }
@@ -37,6 +41,7 @@ func main() {
 	viper.BindPFlag("http.addr", httpFlags.Lookup("addr"))
 
 	rootCmd.AddCommand(
+		versionCmd,
 		validateCmd,
 		convertCmd,
 		httpCmd,
@@ -47,6 +52,13 @@ func main() {
 
 var rootCmd = &cobra.Command{
 	Use: "strac",
+}
+
+var versionCmd = &cobra.Command{
+	Use: "version",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(buildVersion)
+	},
 }
 
 var validateCmd = &cobra.Command{

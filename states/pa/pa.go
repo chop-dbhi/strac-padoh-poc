@@ -9,20 +9,20 @@ var Columns = []*converter.Column{
 		Name:     "PatientFirstName",
 		Required: true,
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Fname, nil
+			return r.PatientFirstName, nil
 		},
 	},
 	{
 		Name: "PatientMiddleInitial",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Middle_Initial, nil
+			return "", nil
 		},
 	},
 	{
 		Name:     "PatientLastName",
 		Required: true,
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Lname, nil
+			return r.PatientLastName, nil
 		},
 	},
 	{
@@ -32,38 +32,38 @@ var Columns = []*converter.Column{
 		Name:     "PatientDOB",
 		Required: true,
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Date_of_Birth, nil
+			return r.PatientDOB, nil
 		},
 	},
 	{
 		Name: "PatientAddress1",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Str, nil
+			return r.PatientAddress, nil
 		},
 	},
 	{
 		Name: "PatientCity",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_City, nil
+			return r.PatientCity, nil
 		},
 	},
 	{
 		Name: "PatientState",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_ST, nil
+			return r.PatientState, nil
 		},
 	},
 	{
 		Name:     "PatientZipCode",
 		Required: true,
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Zip, nil
+			return r.PatientZip, nil
 		},
 	},
 	{
 		Name: "PatientPhoneNumber",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Phone, nil
+			return r.PatientCallbackNumber, nil
 		},
 	},
 	{
@@ -74,7 +74,7 @@ var Columns = []*converter.Column{
 			"Unknown": {},
 		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Sex, nil
+			return r.PatientSex, nil
 		},
 	},
 	{
@@ -89,7 +89,7 @@ var Columns = []*converter.Column{
 			"White":            {},
 		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Race, nil
+			return r.PatientRace, nil
 		},
 	},
 	{
@@ -100,59 +100,37 @@ var Columns = []*converter.Column{
 			"Unkown":       {},
 		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Ethnicity, nil
+			return r.PatientEthnicity, nil
 		},
 	},
 	{
 		Name: "TestID",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Specimen_ID, nil
+			return r.ID, nil
 		},
 	},
 	{
 		Name: "SpecimenCollectedDate",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Date_Specimen_Collected, nil
+			return r.PatientResults, nil
 		},
 	},
 	{
 		Name: "SpecimenSource",
-		Values: map[string]struct{}{
-			"None":    {},
-			"NP swab": {},
-			"Saliva":  {},
-			"Throat":  {},
-			"Unknown": {},
-		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Specimen_Type, nil
+			return "nasal swab", nil
 		},
 	},
 	{
 		Name: "TestName",
-		Values: map[string]struct{}{
-			"COVID-19 ANTIGEN test - Point-of-care": {},
-			"COVID-19 PCR test - Point-of-care":     {},
-			"Influenza A ANTIGEN (positives only)":  {},
-			"Influenza A PCR (positives only)":      {},
-			"Influenza B ANTIGEN (positives only)":  {},
-			"Influenza B PCR (positives only)":      {},
-			"RSV ANTIGEN (positives only)":          {},
-			"RSV PCR (positives only)":              {},
-		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Pt_Middle_Initial, nil
+			return "SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay", nil
 		},
 	},
 	{
 		Name: "TestQualitativeResult",
-		Values: map[string]struct{}{
-			"Detected":     {},
-			"Not Detected": {},
-			"Inconclusive": {},
-		},
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Result, nil
+			return r.PatientPositive, nil
 		},
 	},
 	{
@@ -161,7 +139,7 @@ var Columns = []*converter.Column{
 	{
 		Name: "PerformingFacilityName",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.Performing_Organization_Name, nil
+			return r.Reason, nil
 		},
 	},
 }
