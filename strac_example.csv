@@ -1,0 +1,2 @@
+id,street,city,state,zip,patient_first_name,patient_last_name,patient_dob,patient_address,patient_city,patient_county,patient_state,patient_zip,patient_callback_number,patient_sex,patient_race,patient_ethnicity,patient_results,patient_positive,reason
+test-5,123 Main Street,Atown,PA,19104,Jane,Doe,10/3/1998,321 Sesame St,Btown,,PA,19103,555-5555,Female,Black,Non-Hispanic,12/15/2020,positive,Test Facility

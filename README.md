@@ -18,12 +18,14 @@ Used by data entry workers who can map the STRAC format to the state-specific re
 
 ### Command-line interface
 
+Download the latest [release](https://github.com/chop-dbhi/strac/releases).
+
 Provides machine translation of the STRAC format to the state-specific record structure.
 
 For example, the following will take a STRAC dataset and convert it into the corresponding PA DOH record structure.
 
 ```
-strac convert --state=PA strac_data.csv padoh_data.csv
+strac convert --state=PA strac_example.csv
 ```
 
 During the conversion, it will also validate the data being produced to ensure values are correct and missing data is not present. These will be reported as warnings with the line and column names where they need to be corrected. This enables for human follow-up if required.
