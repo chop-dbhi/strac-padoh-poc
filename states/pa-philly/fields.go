@@ -28,44 +28,6 @@ var Columns = []*converter.Column{
 		},
 	},
 	{
-		Name: "Street",
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.PatientAddress, nil
-		},
-	},
-	{
-		Name: "City",
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.PatientCity, nil
-		},
-	},
-	{
-		Name: "State",
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.PatientState, nil
-		},
-	},
-	{
-		Name:     "Zip",
-		Required: true,
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.PatientZip, nil
-		},
-	},
-	{
-		Name: "Phone",
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			return r.PatientCallbackNumber, nil
-		},
-	},
-	{
-		Name: "Email",
-		Mapper: func(r *converter.STRACRecord) (string, error) {
-			// TODO: STRAC field?
-			return "", nil
-		},
-	},
-	{
 		Name: "Gender",
 		Values: map[string]struct{}{
 			"FEMALE":  {},
@@ -102,6 +64,43 @@ var Columns = []*converter.Column{
 		},
 	},
 	{
+		Name: "Phone",
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientCallbackNumber, nil
+		},
+	},
+	{
+		Name: "Email",
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientEmail, nil
+		},
+	},
+	{
+		Name: "Street",
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientAddress, nil
+		},
+	},
+	{
+		Name: "City",
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientCity, nil
+		},
+	},
+	{
+		Name: "State",
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientState, nil
+		},
+	},
+	{
+		Name:     "Zip",
+		Required: true,
+		Mapper: func(r *converter.STRACRecord) (string, error) {
+			return r.PatientZip, nil
+		},
+	},
+	{
 		Name: "Symptoms",
 		Values: map[string]struct{}{
 			"Yes":                                 {},
@@ -129,19 +128,18 @@ var Columns = []*converter.Column{
 			return "LABCORP", nil
 		},
 	},
-
 	{
 		Name: "Collection Date",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
 			// TODO: correct column? parse date
-			return r.PatientResults, nil
+			return "", nil
 		},
 	},
 	{
 		Name: "Result Date",
 		Mapper: func(r *converter.STRACRecord) (string, error) {
 			// TODO: correct column? parse date
-			return r.PatientResults, nil
+			return "", nil
 		},
 	},
 

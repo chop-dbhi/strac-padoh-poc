@@ -24,6 +24,7 @@ var STRACColumns = []string{
 	"patient_county",
 	"patient_zip",
 	"patient_callback_number",
+	"patient_email",
 	"patient_sex",
 	"patient_race",
 	"patient_ethnicity",
@@ -48,6 +49,7 @@ type STRACRecord struct {
 	PatientState          string `json:"patient_state"`
 	PatientZip            string `json:"patient_zip"`
 	PatientCallbackNumber string `json:"patient_callback_number"`
+	PatientEmail          string `json:"patient_email"`
 	PatientSex            string `json:"patient_sex"`
 	PatientRace           string `json:"patient_race"`
 	PatientEthnicity      string `json:"patient_ethnicity"`
@@ -224,6 +226,7 @@ func Convert(r io.Reader, w io.Writer, columns []*Column) error {
 			PatientCounty:         rowValue(row, stracIndex, "patient_county"),
 			PatientZip:            rowValue(row, stracIndex, "patient_zip"),
 			PatientCallbackNumber: rowValue(row, stracIndex, "patient_callback_number"),
+			PatientEmail:          rowValue(row, stracIndex, "patient_email"),
 			PatientSex:            rowValue(row, stracIndex, "patient_sex"),
 			PatientRace:           rowValue(row, stracIndex, "patient_race"),
 			PatientEthnicity:      rowValue(row, stracIndex, "patient_ethnicity"),
@@ -246,13 +249,13 @@ func Convert(r io.Reader, w io.Writer, columns []*Column) error {
 			}
 
 			if col.Required && value == "" {
-				log.Printf("row %d: missing value for %v", rowNum, col.Name)
+				log.Printf("WARN: row %d: missing value for %v", rowNum, col.Name)
 				continue
 			}
 
 			if len(col.Values) > 0 {
 				if _, ok := col.Values[value]; !ok {
-					log.Printf("row %d: invalid value for %v: %v", rowNum, col.Name, value)
+					log.Printf("WARN: row %d: invalid value for %v: %v", rowNum, col.Name, value)
 				}
 			}
 
