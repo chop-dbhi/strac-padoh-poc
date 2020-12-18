@@ -1,0 +1,18 @@
+Last Name,First Name,DOB,Gender,Race,Ethnicity,Phone,Email,Street,City,State,Zip,Symptoms,Ordering Facility,Lab,Collection Date,Result Date,TestCode,Result
+USER,TEST,1/1/2001,FEMALE,AFRICAN AMERICAN,HISPANIC,215-555-1212,me@me.com,1800 N Broad Street,Philadelphia,PA,19121,Yes,PDPH Ambulatory Health ,LABCORP,1/1/2001,1/1/2001,LOINC Code,SNOMED Code
+,,,,,,,,,,,,,,,,,https://loinc.org/sars-cov-2-and-covid-19/,
+,Reuired date format.,,,WHITE,NON HISPANIC,,,,,,,No,,,,,,Detected 260373001
+,,,,ASIAN,,,,,,,,Priority acute respiratory symptoms,,,,,,Positive 10828004
+,,,,NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER,,,,,,,,Cough,,,,,,Presumptive positive 720735008
+,,,,AMERICAN INDIAN OR ALASKAN NATIVE,,,,,,,,Difficulty Breathing,,,,,,Not detected 260415000
+,,,,OTHER,,,,,,,,Shortness of Breath,,,,,,Negative 260385009
+,,,,,,,,,,,,Fever,,,,,,Indeterminate  82334004
+,,,,,,,,,,,,,,,,,,https://phinvads.cdc.gov/vads/ViewValueSet.action?id=814952DD-5927-4EA3-AD7C-F7867B14CD37
+,,,,,,,,,,,,,,,,,Current LOINCS as of 9/24/2020,
+,,,,,,,,,,,,,,,,,LOINC,Test Description
+,,,,,,,,,,,,,,,,,94309-2,RNA PCR
+,,,,,,,,,,,,,,,,,94500-6,SARS-CoV-2 RNA Resp Ql NAA+probe
+,,,,,,,,,,,,,,,,,94533-7,SARS-CoV-2 N gene Resp Ql NAA+probe
+,,,,,,,,,,,,,,,,,94534-5,SARS-CoV-2 RdRp Resp Ql NAA+probe
+,,,,,,,,,,,,,,,,,94559-2,SARS-CoV-2 ORF1ab Resp Ql NAA+probe
+,,,,,,,,,,,,,,,,,94558-4,SARS-CoV-2 Ag Resp Ql IA.rapid
