@@ -15,6 +15,7 @@ import (
 	"github.com/chop-dbhi/strac/converter"
 
 	pa "github.com/chop-dbhi/strac/states/pa"
+	paphilly "github.com/chop-dbhi/strac/states/pa-philly"
 )
 
 var (
@@ -22,7 +23,8 @@ var (
 )
 
 var states = map[string][]*converter.Column{
-	"pa": pa.Columns,
+	"pa":        pa.Columns,
+	"pa-philly": paphilly.Columns,
 }
 
 func main() {
